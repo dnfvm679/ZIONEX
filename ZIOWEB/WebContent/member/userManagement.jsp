@@ -109,7 +109,7 @@
 
 	</aside>
 	<!-- End of SideMenu -->
-	
+
 	<section>
 		<div class="container-fluid">
 			<div class="row">
@@ -137,8 +137,9 @@
 							%>
 							<tr>
 								<td><%=u.getCompany_id()%></td>
-								<td><a
-									href="/ZIOWEB/Factory?cmd=viewUser&userid=<%=u.getId()%>"><%=u.getId()%></a></td>
+								<td><a href=""
+									data-remote="/ZIOWEB/Factory?cmd=viewUser&userid=<%=u.getId()%>"
+									data-toggle="modal" data-target="#viewModal"><%=u.getId()%></a></td>
 								<td><%=u.getName()%></td>
 								<td><%=u.getPosition()%></td>
 								<td><%=u.getEmail()%></td>
@@ -231,13 +232,108 @@
 					</form>
 				</div>
 				<div class="col-sm-1">
-					<a class="btn btn-primary float-right"
-						href="/ZIOWEB/Factory?cmd=addUserForm">회원추가</a>
+					<a href="" class="btn btn-primary float-right"
+						data-remote="/ZIOWEB/Factory?cmd=addUserForm" data-toggle="modal"
+						data-target="#viewModal">회원추가</a>
 				</div>
 				<div class="col-sm-4"></div>
 			</div>
 		</div>
 	</section>
+
+	<!-- The write Modal -->
+	<div class="modal fade" id="writeModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- The View Modal -->
+	<div class="modal fade" id="viewModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- The Update Modal -->
+	<div class="modal fade" id="updateModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Call Jsp Page on Modal Script -->
+	<script>
+		$('#viewModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+	
+		$('#updateModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+	
+		$('#writeModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+	
+		$("#update").on("click", function() {
+			alert('update');
+		});
+	</script>
 	<footer>aa</footer>
 </body>
 </html>

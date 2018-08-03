@@ -27,19 +27,19 @@ public class UpdateRequestAction implements Action {
 			savedir.mkdirs();
 		}
 		MultipartRequest mr = new MultipartRequest(request, dir, maxSize, encType, new DefaultFileRenamePolicy());
-		String url = "Factory?cmd=viewRequest&id="+ mr.getParameter("id");
+		
 		RequestVO requestvo = new RequestVO();
 		requestvo.setId(mr.getParameter("id"));
 		requestvo.setTitle(mr.getParameter("title"));
 		requestvo.setContent(mr.getParameter("content"));
 		RequestDAO requestdao = new RequestDAO();
 		if (requestdao.updateRequest(requestvo)) {
+			String url = "Factory?cmd=getRequestList&page=1";
 			response.sendRedirect(url);
 		} else {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('Write Failed');");
-			out.println("history.back();");
+			out.println("alert('Update Failed');");
 			out.println("</script>");
 		}
 	}

@@ -35,3 +35,11 @@ aside{
 	text-align: center;
 	width: 30%;
 }
+
+.text-right{
+	text-align: right;
+}
+
+.centerAlign{
+	margin: 0 auto;	
+}

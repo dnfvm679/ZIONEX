@@ -20,7 +20,6 @@
 <title>ZIOWEB</title>
 </head>
 <body>
-
 	<%
 		new RequestDAO().checkFinishCount();
 	%>
@@ -146,7 +145,7 @@
 				<div class="col-sm-2">
 					<div class="card" style="width: 100%">
 						<div class="card-body">
-							<h4 class="card-title">오늘의 요청 건수</h4>
+							<h4 class="card-title">전체 요청 건수</h4>
 							<p class="card-text" id="todayRequest">N/A</p>
 						</div>
 					</div>
@@ -164,9 +163,193 @@
 				</div>
 				<div class="col-sm-3"></div>
 			</div>
-			<div class="row"></div>
+			<div class="row">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-8">
+					<table class="table table-hover"
+						style="width: 100%; text-align: center;">
+						<thead>
+							<tr>
+								<th colspan="5">최근요청목록</th>
+							</tr>
+							<tr>
+								<td>요청번호</td>
+								<td>제목</td>
+								<td>작성자</td>
+								<td>작성일자</td>
+								<td>처리상태</td>
+							</tr>
+						</thead>
+						<tbody id="tbody">
+
+						</tbody>
+					</table>
+				</div>
+				<div class="col-sm-3"></div>
+			</div>
 		</div>
 	</section>
+
+	<!-- The View Modal -->
+	<div class="modal fade" id="viewModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- The Update Modal -->
+	<div class="modal fade" id="updateModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- The State Modal -->
+	<div class="modal fade" id="stateModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- The Complete Modal -->
+	<div class="modal fade" id="completeModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+	<!-- Call Jsp Page on Modal Script -->
+	<script>
+		$('#viewModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+	
+		$('#updateModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+	
+		$('#stateModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+	
+		$('#completeModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+	</script>
+
+	<!-- Get Latest Request List -->
+	<script>
+		setInterval(function() {
+			$.ajax({
+				type : "POST",
+				url : "Factory?cmd=getNewRequestList",
+				dataType : "json",
+				error : function() {
+					alert('통신실패!!');
+				},
+				success : function(data) {
+					$("#tbody").html("");
+					for (var i = 0; i < data.list.length; i++) {
+						$("#tbody").append("<tr>" +
+							"<td>" +
+							"<a href=''" +
+							" data-remote='/ZIOWEB/Factory?cmd=viewRequest&id=" +
+							data.list[i].id +
+							"'" +
+							" data-toggle='modal' data-target='#viewModal'>" +
+							data.list[i].num +
+							"</a>" +
+							"</td>" +
+							"<td>" +
+							"<a href=''" +
+							" data-remote='/ZIOWEB/Factory?cmd=viewRequest&id=" +
+							data.list[i].id +
+							"'" +
+							" data-toggle='modal' data-target='#viewModal'>" +
+							data.list[i].title +
+							"</a>" +
+							"</td>" +
+							"<td>" + data.list[i].name + "</td>" +
+							"<td>" + data.list[i].date + "</td>" +
+							"<td>" + data.list[i].state + "</td>" +
+							"</tr>");
+					}
+				}
+			});
+		}, 1000);
+	</script>
 
 	<!-- Google Chart -->
 	<script src="https://www.gstatic.com/charts/loader.js"></script>

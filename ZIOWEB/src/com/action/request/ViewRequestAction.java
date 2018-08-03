@@ -16,7 +16,6 @@ public class ViewRequestAction implements Action {
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "request/viewRequest.jsp";
 		String id = request.getParameter("id");
-		String state_name = request.getParameter("state_name");
 		RequestDAO requestdao = new RequestDAO();
 		RequestVO requestvo = null;
 		requestvo = requestdao.getRequset(id);

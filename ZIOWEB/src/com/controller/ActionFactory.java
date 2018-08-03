@@ -17,6 +17,7 @@ import com.action.member.ViewUserAction;
 import com.action.request.DeleteRequestAction;
 import com.action.request.FinishRequestAction;
 import com.action.request.FinishRequestForm;
+import com.action.request.GetNewRequestListAction;
 import com.action.request.GetPeriodRequestNum;
 import com.action.request.GetRequestListAction;
 import com.action.request.ProcessChangeAction;
@@ -119,6 +120,9 @@ public class ActionFactory {
 			break;
 		case "getPeriodRequestNum":
 			action = new GetPeriodRequestNum();
+			break;
+		case "getNewRequestList":
+			action = new GetNewRequestListAction();
 			break;
 		default:
 			break;

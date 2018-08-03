@@ -74,8 +74,8 @@
 		</div>
 	</nav>
 	<!-- End of Navigation -->
-	<section>
-		<div class="container-fluid">
+	<section style="width: 100% ">
+		<div class="container-fluid centerAlign">
 			<br>
 			<div class="row">
 				<div class="col-sm-3"></div>

@@ -50,6 +50,8 @@ public class RequestDAO {
 						list.add(request);
 					}
 				} while (rs.next());
+				pstmt.close();
+				rs.close();
 				return list;
 			} else {
 				return null;
@@ -92,6 +94,8 @@ public class RequestDAO {
 						list.add(request);
 					}
 				} while (rs.next());
+				pstmt.close();
+				rs.close();
 				return list;
 			} else {
 				return null;
@@ -115,9 +119,13 @@ public class RequestDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				String boardNum = rs.getString("C");
+				pstmt.close();
+				rs.close();
 				return boardNum;
 			} else {
 				String boardNum = "0001";
+				pstmt.close();
+				rs.close();
 				return boardNum;
 			}
 		} catch (Exception e) {
@@ -134,8 +142,12 @@ public class RequestDAO {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
+				pstmt.close();
+				rs.close();
 				return rs.getInt("COUNT(*)");
 			} else {
+				pstmt.close();
+				rs.close();
 				return -1;
 			}
 		} catch (Exception e) {
@@ -154,12 +166,13 @@ public class RequestDAO {
 			pstmt.setString(3, request.getTitle());
 			pstmt.setString(4, request.getContent());
 			pstmt.executeUpdate();
-
 			pstmt.close();
+			
 			pstmt = conn.prepareStatement(sql2);
 			pstmt.setString(1, request.getId());
 			pstmt.executeUpdate();
 			checkFinishCount();
+			pstmt.close();
 			return true;
 		} catch (Exception e) {
 			log.info(e);
@@ -203,6 +216,8 @@ public class RequestDAO {
 				request.setComplete_date(rs.getString("complete_date"));
 				request.setProcess_content(rs.getString("process_content"));
 				request.setProcess_hour(rs.getString("process_hour"));
+				pstmt.close();
+				rs.close();
 			} else {
 				log.info(id + " Request is not exist");
 			}
@@ -222,6 +237,7 @@ public class RequestDAO {
 			pstmt.setString(2, request.getContent());
 			pstmt.setString(3, request.getId());
 			pstmt.executeUpdate();
+			pstmt.close();
 			return true;
 		} catch (Exception e) {
 			log.info(e);
@@ -236,6 +252,7 @@ public class RequestDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.executeUpdate();
+			pstmt.close();
 			return true;
 		} catch (Exception e) {
 			log.info(e);
@@ -255,6 +272,7 @@ public class RequestDAO {
 			pstmt.setString(4, r.getProcess_type_id());
 			pstmt.setString(5, r.getId());
 			pstmt.executeUpdate();
+			pstmt.close();
 			return true;
 		} catch (Exception e) {
 			log.info(e);
@@ -263,8 +281,7 @@ public class RequestDAO {
 	}
 
 	public int getRequestNum() {
-		String sql = "SELECT COUNT(*) REQUEST_NUM " + "FROM TBL_REQUEST_INFO "
-				+ "WHERE ID LIKE '%'||TO_CHAR(SYSDATE,'yyyyMMdd')||'%'";
+		String sql = "SELECT COUNT(*) REQUEST_NUM " + "FROM TBL_REQUEST_INFO ";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -287,8 +304,7 @@ public class RequestDAO {
 
 	public int getFinished_RequestNum() {
 		String sql = "SELECT COUNT(*) REQUEST_NUM" + "  FROM TBL_REQUEST_INFO RI " + "       ,TBL_REQUEST_PROCESS RP "
-				+ " WHERE RI.ID = RP.ID " + "       AND RP.PROCESS_STATE_ID = 'S04' "
-				+ "       AND RI.ID LIKE '%'||TO_CHAR(SYSDATE,'yyyyMMdd')||'%'";
+				+ " WHERE RI.ID = RP.ID " + "       AND RP.PROCESS_STATE_ID = 'S04' ";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -311,8 +327,7 @@ public class RequestDAO {
 
 	public int getUnfinished_RequestNum() {
 		String sql = "SELECT COUNT(*) REQUEST_NUM" + "  FROM TBL_REQUEST_INFO RI " + "       ,TBL_REQUEST_PROCESS RP "
-				+ " WHERE RI.ID = RP.ID " + "       AND RP.PROCESS_STATE_ID != 'S04' "
-				+ "       AND RI.ID LIKE '%'||TO_CHAR(SYSDATE,'yyyyMMdd')||'%'";
+				+ " WHERE RI.ID = RP.ID " + "       AND RP.PROCESS_STATE_ID != 'S04' ";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {

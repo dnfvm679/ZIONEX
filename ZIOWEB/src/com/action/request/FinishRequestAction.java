@@ -14,7 +14,6 @@ import com.dto.RequestVO;
 public class FinishRequestAction implements Action {
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "Factory?cmd=viewRequest&id="+ request.getParameter("id");
 		String id = request.getParameter("id");
 		String time = request.getParameter("time")+request.getParameter("unit");
 		String date = request.getParameter("date");
@@ -27,13 +26,13 @@ public class FinishRequestAction implements Action {
 		requestvo.setProcess_hour(time);
 		
 		RequestDAO requestdao = new RequestDAO();
-		if(requestdao.finishRequest(requestvo)) {
+		if (requestdao.finishRequest(requestvo)) {
+			String url = "Factory?cmd=getRequestList&page=1";
 			response.sendRedirect(url);
-		}else{
+		} else {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('Finish Failed');");
-			out.println("history.back();");
+			out.println("alert('Update Failed');");
 			out.println("</script>");
 		}
 		

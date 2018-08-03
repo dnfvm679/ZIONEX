@@ -121,8 +121,7 @@
 						style="width: 100%; text-align: center;">
 						<thead>
 							<tr>
-								<th colspan="4"><input type="hidden" value="loginAction"
-									name="cmd">요청목록</th>
+								<th colspan="4">요청목록</th>
 							</tr>
 							<tr>
 								<td>요청번호</td>
@@ -139,9 +138,12 @@
 									for (RequestVO r : list) {
 							%>
 							<tr>
-								<td><a
-									href="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>&state_name=<%=r.getProcess_state_name()%>"><%=r.getReq_index()%></a></td>
-								<td><a href="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>&state_name=<%=r.getProcess_state_name()%>"><%=r.getTitle()%></a></td>
+								<td><a href=""
+									data-remote="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>&state_name=<%=r.getProcess_state_name()%>"
+									data-toggle="modal" data-target="#viewModal"><%=r.getReq_index()%></a></td>
+								<td><a href=""
+									data-remote="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>&state_name=<%=r.getProcess_state_name()%>"
+									data-toggle="modal" data-target="#viewModal"><%=r.getTitle()%></a></td>
 								<td><%=r.getUser_name()%></td>
 								<td><%=r.getRequest_date()%></td>
 								<td><%=r.getProcess_state_name()%></td>
@@ -233,39 +235,163 @@
 					</form>
 				</div>
 				<div class="col-sm-1">
-					<a class="btn btn-primary float-right"
-						href="/ZIOWEB/Factory?cmd=writeRequestForm">글쓰기</a>
+					<a href="" class="btn btn-primary float-right"
+						data-remote="/ZIOWEB/Factory?cmd=writeRequestForm"
+						data-toggle="modal" data-target="#writeModal">글쓰기</a>
 				</div>
 				<div class="col-sm-4"></div>
 			</div>
 		</div>
 	</section>
 
-	<!-- Modal -->
-	<div class="modal fade" id="theModal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header"></div>
-				<div class="modal-body">... remote content from "data-remote"
-					loads here ...</div>
+
+	<!-- The State Modal -->
+	<div class="modal fade" id="stateModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Close</button>
 				</div>
+
 			</div>
 		</div>
 	</div>
 
-	<!-- Call LoginForm.jsp Script -->
+	<!-- The Complete Modal -->
+	<div class="modal fade" id="completeModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- The write Modal -->
+	<div class="modal fade" id="writeModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- The View Modal -->
+	<div class="modal fade" id="viewModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- The Update Modal -->
+	<div class="modal fade" id="updateModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="width: 1200px;">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">Modal body..</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Call Jsp Page on Modal Script -->
 	<script>
-		$('#theModal').on('show.bs.modal', function(e) {
-	
+		$('#viewModal').on('show.bs.modal', function(e) {
 			var button = $(e.relatedTarget);
 			var modal = $(this);
-	
 			modal.find('.modal-body').load(button.data("remote"));
-	
 		});
+	
+		$('#updateModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+	
+		$('#writeModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+		
+		$('#stateModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+		
+		$('#completeModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+	
 	</script>
 </body>
 </html>
